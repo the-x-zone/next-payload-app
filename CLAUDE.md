@@ -105,4 +105,24 @@ Jobs queue is configured in `payload.config.ts`. The `/api/payload-jobs/run` end
 ## Environment Variables
 
 Required: `DATABASE_URL`, `PAYLOAD_SECRET`
-Optional: `CRON_SECRET` (for triggering jobs from Vercel Cron or external schedulers)
+Optional: `CRON_SECRET` (for triggering jobs from Vercel Cron or external schedulers), `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET`, `R2_ENDPOINT`, `R2_PUBLIC_URL` (Cloudflare R2 media storage)
+
+## Reference Docs
+
+Deep-dive documentation lives in `docs/`. Read these when working on the relevant area:
+
+| File | Topic |
+|------|-------|
+| `docs/payload-overview.md` | Architecture and core concepts |
+| `docs/security-critical.mdc` | Access control bypass, transaction safety, hook loops |
+| `docs/collections.md` | Collection patterns, auth, uploads, drafts, globals |
+| `docs/fields.md` | All field types, conditional fields, virtual fields, validation |
+| `docs/field-type-guards.md` | TypeScript field type utilities |
+| `docs/access-control.md` | Collection/field-level access, RBAC, row-level security |
+| `docs/access-control-advanced.md` | Cross-collection permissions, dynamic roles, multi-tenant |
+| `docs/hooks.md` | Lifecycle hooks, hook context, common recipes |
+| `docs/queries.md` | Local API, query operators, AND/OR, performance |
+| `docs/endpoints.md` | Custom REST endpoints, auth, error handling |
+| `docs/adapters.md` | Database and storage adapters |
+| `docs/components.md` | Custom admin components, server vs client, styling |
+| `docs/plugin-development.md` | Creating Payload plugins |
