@@ -1,3 +1,5 @@
+@reference "tailwindcss";
+@reference "../../app/(frontend)/globals.css";
 .hero {
   @apply relative -mt-[10.4rem] flex items-end;
 }

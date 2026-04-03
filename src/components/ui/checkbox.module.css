@@ -1,3 +1,5 @@
+@reference "tailwindcss";
+@reference "../../app/(frontend)/globals.css";
 @property --checkbox-bg {
   syntax: '<color>';
   inherits: false;

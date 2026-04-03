@@ -1,3 +1,5 @@
+@reference "tailwindcss";
+@reference "../../app/(frontend)/globals.css";
 .nav {
   @apply mx-auto flex w-full justify-center;
 }
