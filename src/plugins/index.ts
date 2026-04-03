@@ -1,8 +1,9 @@
-import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
+import { formBuilderPlugin, fields as formFields } from '@payloadcms/plugin-form-builder'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
 import { searchPlugin } from '@payloadcms/plugin-search'
+import { s3Storage } from '@payloadcms/storage-s3'
 import { Plugin } from 'payload'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
 import { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
@@ -24,6 +25,20 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 }
 
 export const plugins: Plugin[] = [
+  s3Storage({
+    collections: {
+      media: true,
+    },
+    bucket: process.env.R2_BUCKET || '',
+    config: {
+      credentials: {
+        accessKeyId: process.env.R2_ACCESS_KEY_ID || '',
+        secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || '',
+      },
+      region: 'auto',
+      endpoint: process.env.R2_ENDPOINT || '',
+    },
+  }),
   redirectsPlugin({
     collections: ['pages', 'posts'],
     overrides: {
@@ -56,6 +71,33 @@ export const plugins: Plugin[] = [
   }),
   formBuilderPlugin({
     fields: {
+      date: {
+        ...formFields.date,
+        fields: [
+          ...(formFields.date?.fields || []),
+          {
+            type: 'row',
+            fields: [
+              {
+                name: 'minDate',
+                type: 'date',
+                admin: {
+                  width: '50%',
+                  description: 'The earliest date',
+                },
+              },
+              {
+                name: 'maxDate',
+                type: 'date',
+                admin: {
+                  width: '50%',
+                  description: 'The latest date',
+                },
+              },
+            ],
+          },
+        ],
+      },
       payment: false,
     },
     formOverrides: {
