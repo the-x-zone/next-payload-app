@@ -92,11 +92,19 @@ await payload.update({ ..., context: { skipHooks: true }, req })
 
 ## Postgres Migrations
 
-Migrations are required in production. Workflow:
-1. Make schema changes in collection/global configs
-2. `pnpm payload migrate:create` — generates SQL migration files
-3. Commit migration files alongside config changes
-4. On the server, run `pnpm payload migrate` before `pnpm start`
+**Local dev** (`NODE_ENV=development`): `push: true` — schema syncs automatically against the Neon dev branch. No migrations needed.
+
+**Production** (`NODE_ENV=production`): `push: false` — schema never changes automatically. If you modified any collection or global fields, you **must** run migrations or the deploy will break.
+
+### ⚠️ Pre-deploy checklist when schema has changed
+
+1. `pnpm payload migrate:create` — generates SQL migration files
+2. Commit the migration files alongside the config changes (they go in `src/migrations/`)
+3. After deploying, run `pnpm payload migrate` on the server before traffic hits it
+
+On Vercel, add a build step or run migrations via the Vercel dashboard / CLI before promoting to production.
+
+> If you skip this and deploy schema changes without a migration, Payload will throw on startup because the DB schema won't match the config.
 
 ## Cron / Scheduled Publishing
 

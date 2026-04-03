@@ -1,4 +1,4 @@
-import { formBuilderPlugin } from '@payloadcms/plugin-form-builder'
+import { formBuilderPlugin, fields as formFields } from '@payloadcms/plugin-form-builder'
 import { nestedDocsPlugin } from '@payloadcms/plugin-nested-docs'
 import { redirectsPlugin } from '@payloadcms/plugin-redirects'
 import { seoPlugin } from '@payloadcms/plugin-seo'
@@ -71,6 +71,33 @@ export const plugins: Plugin[] = [
   }),
   formBuilderPlugin({
     fields: {
+      date: {
+        ...formFields.date,
+        fields: [
+          ...(formFields.date?.fields || []),
+          {
+            type: 'row',
+            fields: [
+              {
+                name: 'minDate',
+                type: 'date',
+                admin: {
+                  width: '50%',
+                  description: 'The earliest date',
+                },
+              },
+              {
+                name: 'maxDate',
+                type: 'date',
+                admin: {
+                  width: '50%',
+                  description: 'The latest date',
+                },
+              },
+            ],
+          },
+        ],
+      },
       payment: false,
     },
     formOverrides: {
