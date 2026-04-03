@@ -115,6 +115,26 @@ Jobs queue is configured in `payload.config.ts`. The `/api/payload-jobs/run` end
 Required: `DATABASE_URL`, `PAYLOAD_SECRET`
 Optional: `CRON_SECRET` (for triggering jobs from Vercel Cron or external schedulers), `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`, `R2_BUCKET`, `R2_ENDPOINT`, `R2_PUBLIC_URL` (Cloudflare R2 media storage)
 
+### Getting env vars for local development
+
+All environment variables are stored in Vercel. To pull them locally:
+
+```bash
+# First time setup — link the project
+vercel link
+
+# Pull env vars into .env.local
+vercel env pull .env.local
+```
+
+Then start the dev server normally:
+
+```bash
+pnpm dev
+```
+
+> `vercel env pull` overwrites `.env.local` completely. If you have local-only overrides (e.g. a personal Neon dev branch URL), re-add them after pulling or keep them in `.env.development.local` which Next.js loads after `.env.local`.
+
 ## Reference Docs
 
 Deep-dive documentation lives in `docs/`. Read these when working on the relevant area:
