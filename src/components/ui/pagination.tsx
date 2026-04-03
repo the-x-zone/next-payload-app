@@ -1,14 +1,14 @@
-import type { ButtonProps } from '@/components/ui/button'
-
-import { buttonVariants } from '@/components/ui/button'
 import { cn } from '@/utilities/ui'
+import { getButtonClassName } from '@/components/ui/button'
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react'
 import * as React from 'react'
+
+import styles from './pagination.module.css'
 
 const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
   <nav
     aria-label="pagination"
-    className={cn('mx-auto flex w-full justify-center', className)}
+    className={cn(styles.nav, className)}
     role="navigation"
     {...props}
   />
@@ -17,26 +17,25 @@ const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
 const PaginationContent: React.FC<
   { ref?: React.Ref<HTMLUListElement> } & React.HTMLAttributes<HTMLUListElement>
 > = ({ className, ref, ...props }) => (
-  <ul className={cn('flex flex-row items-center gap-1', className)} ref={ref} {...props} />
+  <ul className={cn(styles.list, className)} ref={ref} {...props} />
 )
 
 const PaginationItem: React.FC<
   { ref?: React.Ref<HTMLLIElement> } & React.HTMLAttributes<HTMLLIElement>
-> = ({ className, ref, ...props }) => <li className={cn('', className)} ref={ref} {...props} />
+> = ({ className, ref, ...props }) => (
+  <li className={cn(styles.item, className)} ref={ref} {...props} />
+)
 
 type PaginationLinkProps = {
   isActive?: boolean
-} & Pick<ButtonProps, 'size'> &
-  React.ComponentProps<'button'>
+  size?: 'default' | 'sm' | 'lg' | 'icon' | 'clear'
+} & React.ComponentProps<'button'>
 
 const PaginationLink = ({ className, isActive, size = 'icon', ...props }: PaginationLinkProps) => (
   <button
     aria-current={isActive ? 'page' : undefined}
     className={cn(
-      buttonVariants({
-        size,
-        variant: isActive ? 'outline' : 'ghost',
-      }),
+      getButtonClassName(isActive ? 'outline' : 'ghost', size),
       className,
     )}
     {...props}
@@ -73,7 +72,7 @@ const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof Pag
 const PaginationEllipsis = ({ className, ...props }: React.ComponentProps<'span'>) => (
   <span
     aria-hidden
-    className={cn('flex h-9 w-9 items-center justify-center', className)}
+    className={cn(styles.ellipsis, className)}
     {...props}
   >
     <MoreHorizontal className="h-4 w-4" />

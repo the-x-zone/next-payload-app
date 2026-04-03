@@ -1,0 +1,19 @@
+.nav {
+  @apply mx-auto flex w-full justify-center;
+}
+
+.list {
+  @apply flex flex-row items-center gap-1;
+}
+
+.item {
+  /* wrapper li — no styles needed */
+}
+
+.link {
+  /* inherits btn styles via cn() in TSX */
+}
+
+.ellipsis {
+  @apply flex h-9 w-9 items-center justify-center;
+}

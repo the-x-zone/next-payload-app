@@ -1,0 +1,33 @@
+@property --card-bg {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: transparent;
+}
+
+.card {
+  --_bg: var(--card-bg, var(--color-card));
+
+  @apply rounded-lg overflow-hidden border border-border;
+  @apply hover:cursor-pointer;
+  background-color: var(--_bg);
+}
+
+.card__media {
+  @apply relative w-full;
+}
+
+.card__body {
+  @apply p-4;
+}
+
+.card__categories {
+  @apply uppercase text-sm mb-4;
+}
+
+.card__title {
+  @apply prose;
+}
+
+.card__description {
+  @apply mt-2;
+}

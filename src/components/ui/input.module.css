@@ -1,0 +1,33 @@
+.input {
+  @apply flex h-9 w-full min-w-0 rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-xs;
+  @apply transition-[color,box-shadow];
+  @apply placeholder:text-muted-foreground;
+  @apply focus-visible:ring-4 focus-visible:outline-1;
+  @apply disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50;
+  @apply md:text-sm;
+
+  outline-color: color-mix(in oklch, var(--color-ring) 50%, transparent);
+
+  /* file input */
+  &::file-selector-button {
+    @apply inline-flex h-7 border-0 bg-transparent text-sm font-medium;
+    color: var(--color-foreground);
+  }
+
+  /* selection */
+  &::selection {
+    background-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+
+  /* invalid state */
+  &:is([aria-invalid='true']) {
+    @apply border-destructive/60;
+    outline-color: color-mix(in oklch, var(--color-destructive) 60%, transparent);
+    box-shadow: 0 0 0 0 color-mix(in oklch, var(--color-destructive) 20%, transparent);
+
+    &:focus-visible {
+      @apply ring-[3px] outline-none;
+    }
+  }
+}
