@@ -70,11 +70,13 @@ export const plugins: Plugin[] = [
     generateURL,
   }),
   formBuilderPlugin({
-    fields: {
+    fields: (() => {
+      const dateBlock = typeof formFields.date === 'function' ? formFields.date() : formFields.date
+      return {
       date: {
-        ...formFields.date,
+        ...dateBlock,
         fields: [
-          ...(formFields.date?.fields || []),
+          ...(dateBlock?.fields || []),
           {
             type: 'row',
             fields: [
@@ -99,7 +101,7 @@ export const plugins: Plugin[] = [
         ],
       },
       payment: false,
-    },
+    }})(),
     formOverrides: {
       fields: ({ defaultFields }) => {
         return defaultFields.map((field) => {
