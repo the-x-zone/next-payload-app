@@ -42,11 +42,13 @@ export const Card: React.FC<{
           <div className={styles.card__categories}>
             {categories?.map((category, index) => {
               if (typeof category === 'object') {
-                const { title: titleFromCategory } = category
+                const { title: titleFromCategory, slug: categorySlug } = category
                 const categoryTitle = titleFromCategory || 'Untitled category'
                 const isLast = index === categories.length - 1
+                // Prefer slug as key, fallback to title, fallback to index (last resort)
+                const key = categorySlug || titleFromCategory || `category-${index}`
                 return (
-                  <Fragment key={index}>
+                  <Fragment key={key}>
                     {categoryTitle}
                     {!isLast && <Fragment>, &nbsp;</Fragment>}
                   </Fragment>
