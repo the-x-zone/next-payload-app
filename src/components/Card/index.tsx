@@ -8,6 +8,8 @@ import type { Post } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 
+import styles from './card.module.css'
+
 export type CardPostData = Pick<Post, 'slug' | 'categories' | 'meta' | 'title'>
 
 export const Card: React.FC<{
@@ -26,32 +28,23 @@ export const Card: React.FC<{
 
   const hasCategories = categories && Array.isArray(categories) && categories.length > 0
   const titleToUse = titleFromProps || title
-  const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
+  const sanitizedDescription = description?.replace(/\s/g, ' ')
   const href = `/${relationTo}/${slug}`
 
   return (
-    <article
-      className={cn(
-        'border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
-        className,
-      )}
-      ref={card.ref}
-    >
-      <div className="relative w-full ">
-        {!metaImage && <div className="">No image</div>}
+    <article className={cn(styles.card, className)} ref={card.ref}>
+      <div className={styles.card__media}>
+        {!metaImage && <div>No image</div>}
         {metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="33vw" />}
       </div>
-      <div className="p-4">
+      <div className={styles.card__body}>
         {showCategories && hasCategories && (
-          <div className="uppercase text-sm mb-4">
+          <div className={styles.card__categories}>
             {categories?.map((category, index) => {
               if (typeof category === 'object') {
                 const { title: titleFromCategory } = category
-  
                 const categoryTitle = titleFromCategory || 'Untitled category'
-  
                 const isLast = index === categories.length - 1
-  
                 return (
                   <Fragment key={index}>
                     {categoryTitle}
@@ -59,13 +52,12 @@ export const Card: React.FC<{
                   </Fragment>
                 )
               }
-  
               return null
             })}
           </div>
         )}
         {titleToUse && (
-          <div className="prose">
+          <div className={styles.card__title}>
             <h3>
               <Link className="not-prose" href={href} ref={link.ref}>
                 {titleToUse}
@@ -73,7 +65,11 @@ export const Card: React.FC<{
             </h3>
           </div>
         )}
-        {description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
+        {description && (
+          <div className={styles.card__description}>
+            <p>{sanitizedDescription}</p>
+          </div>
+        )}
       </div>
     </article>
   )

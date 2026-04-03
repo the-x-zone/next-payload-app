@@ -1,0 +1,24 @@
+@reference "tailwindcss";
+@reference "../../app/(frontend)/globals.css";
+.hero {
+  @apply relative -mt-[10.4rem] flex items-center justify-center text-white;
+}
+
+.hero__content {
+  @apply container mb-8 z-10 relative flex items-center justify-center;
+}
+
+.hero__inner {
+  @apply max-w-[36.5rem] md:text-center;
+}
+
+.hero__links {
+  @apply flex md:justify-center gap-4;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.hero__media {
+  @apply min-h-[80vh] select-none;
+}

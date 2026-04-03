@@ -1,0 +1,30 @@
+@reference "tailwindcss";
+@reference "../../app/(frontend)/globals.css";
+@property --checkbox-bg {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: transparent;
+}
+
+.checkbox {
+  --_bg: var(--checkbox-bg, transparent);
+
+  @apply size-4 shrink-0 rounded-[4px] border border-input shadow-xs;
+  @apply transition-[color,box-shadow];
+  @apply focus-visible:ring-4 focus-visible:outline-1;
+  @apply disabled:cursor-not-allowed disabled:opacity-50;
+  @apply aria-invalid:focus-visible:ring-0;
+
+  background-color: var(--_bg);
+  outline-color: color-mix(in oklch, var(--color-ring) 50%, transparent);
+
+  &[data-state='checked'] {
+    --checkbox-bg: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+}
+
+.indicator {
+  @apply flex items-center justify-center text-current;
+}

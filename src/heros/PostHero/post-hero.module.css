@@ -1,0 +1,47 @@
+@reference "tailwindcss";
+@reference "../../app/(frontend)/globals.css";
+.hero {
+  @apply relative -mt-[10.4rem] flex items-end;
+}
+
+.hero__content {
+  @apply container z-10 relative pb-8 text-white;
+  @apply lg:grid lg:grid-cols-[1fr_48rem_1fr];
+}
+
+.hero__body {
+  @apply col-start-1 col-span-1 md:col-start-2 md:col-span-2;
+}
+
+.hero__categories {
+  @apply uppercase text-sm mb-6;
+}
+
+.hero__title {
+  @apply mb-6 text-3xl md:text-5xl lg:text-6xl;
+}
+
+.hero__meta {
+  @apply flex flex-col md:flex-row gap-4 md:gap-16;
+}
+
+.hero__meta-group {
+  @apply flex flex-col gap-4;
+}
+
+.hero__meta-item {
+  @apply flex flex-col gap-1;
+}
+
+.hero__meta-label {
+  @apply text-sm;
+}
+
+.hero__media {
+  @apply min-h-[80vh] select-none;
+}
+
+.hero__gradient {
+  @apply absolute pointer-events-none left-0 bottom-0 w-full h-1/2;
+  background: linear-gradient(to top, black, transparent);
+}

@@ -1,7 +1,7 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import sharp from 'sharp'
 import path from 'path'
-import { buildConfig, PayloadRequest } from 'payload'
+import { buildConfig, PayloadRequest, SendEmailOptions } from 'payload'
 import { fileURLToPath } from 'url'
 
 import { Categories } from './collections/Categories'
@@ -19,6 +19,18 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  email :(payload)=>{
+    console.log('email adapter initializing'); // ← does this appear?
+    return {
+      defaultFromAddress: 'tes@asd.com',
+      defaultFromName: 'Test Env',
+      name: "emailing name",
+      sendEmail: async (message: SendEmailOptions) => {
+        console.log({message,payload});
+      }
+    }
+    
+  },
   admin: {
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
@@ -77,10 +89,10 @@ export default buildConfig({
       run: ({ req }: { req: PayloadRequest }): boolean => {
         // Allow logged in users to execute this endpoint (default)
         if (req.user) return true
-
+        
         const secret = process.env.CRON_SECRET
         if (!secret) return false
-
+        
         // If there is no logged in user, then check
         // for the Vercel Cron secret to be present as an
         // Authorization header:

@@ -1,0 +1,114 @@
+@reference "tailwindcss";
+@reference "../../app/(frontend)/globals.css";
+@property --btn-bg {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: transparent;
+}
+
+@property --btn-color {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: currentColor;
+}
+
+.btn {
+  --_bg: var(--btn-bg, var(--color-primary));
+  --_color: var(--btn-color, var(--color-primary-foreground));
+
+  @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium;
+  @apply transition-[color,box-shadow];
+  @apply disabled:pointer-events-none disabled:opacity-50;
+  @apply focus-visible:ring-4 focus-visible:outline-1;
+  @apply aria-invalid:focus-visible:ring-0;
+
+  background-color: var(--_bg);
+  color: var(--_color);
+
+  /* ring/outline defaults */
+  outline-color: color-mix(in oklch, var(--color-ring) 50%, transparent);
+  box-shadow: 0 0 0 0 var(--color-ring);
+
+  & svg {
+    pointer-events: none;
+    flex-shrink: 0;
+    &:not([class*='size-']) {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+}
+
+/* --- Variants --- */
+
+.btn--default {
+  --btn-bg: var(--color-primary);
+  --btn-color: var(--color-primary-foreground);
+  @apply shadow-sm;
+  &:hover { --btn-bg: color-mix(in oklch, var(--color-primary) 90%, transparent); }
+}
+
+.btn--destructive {
+  --btn-bg: var(--color-destructive);
+  --btn-color: var(--color-destructive-foreground);
+  @apply shadow-xs;
+  &:hover { --btn-bg: color-mix(in oklch, var(--color-destructive) 90%, transparent); }
+}
+
+.btn--outline {
+  --btn-bg: var(--color-background);
+  --btn-color: var(--color-foreground);
+  @apply border border-input shadow-xs;
+  &:hover {
+    --btn-bg: var(--color-accent);
+    --btn-color: var(--color-accent-foreground);
+  }
+}
+
+.btn--secondary {
+  --btn-bg: var(--color-secondary);
+  --btn-color: var(--color-secondary-foreground);
+  @apply shadow-xs;
+  &:hover { --btn-bg: color-mix(in oklch, var(--color-secondary) 80%, transparent); }
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-color: var(--color-foreground);
+  &:hover {
+    --btn-bg: var(--color-accent);
+    --btn-color: var(--color-accent-foreground);
+  }
+}
+
+.btn--link {
+  --btn-bg: transparent;
+  --btn-color: var(--color-primary);
+  text-underline-offset: 4px;
+  &:hover { text-decoration: underline; }
+}
+
+/* --- Sizes --- */
+
+.btn--default-size {
+  @apply h-10 px-4 py-2;
+  &:has(> svg) { padding-inline: 0.75rem; }
+}
+
+.btn--sm {
+  @apply h-9 rounded-md px-3;
+  &:has(> svg) { padding-inline: 0.625rem; }
+}
+
+.btn--lg {
+  @apply h-11 rounded-md px-8;
+  &:has(> svg) { padding-inline: 1rem; }
+}
+
+.btn--icon {
+  @apply size-10;
+}
+
+.btn--clear {
+  /* no size constraints */
+}
