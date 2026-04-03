@@ -1,8 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
-@config '../../../tailwind.config.mjs';
-
 @custom-variant dark (&:is([data-theme='dark'] *));
 @custom-variant sm (@media (width >= theme(--breakpoint-sm)));
 @custom-variant md (@media (width >= theme(--breakpoint-md)));
@@ -23,6 +21,26 @@
 }
 
 @plugin "@tailwindcss/typography";
+
+.prose {
+  --tw-prose-body: var(--text);
+  --tw-prose-headings: var(--text);
+
+  h1 {
+    font-weight: normal;
+    margin-bottom: 0.25em;
+  }
+}
+
+.prose-base {
+  h1 { font-size: 2.5rem; }
+  h2 { font-size: 1.25rem; font-weight: 600; }
+}
+
+.prose-md {
+  h1 { font-size: 3.5rem; }
+  h2 { font-size: 1.5rem; }
+}
 
 @source inline("lg:col-span-4");
 @source inline("lg:col-span-6");
